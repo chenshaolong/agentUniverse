@@ -54,10 +54,9 @@ class OpenAILLM(LLM):
 
         openai_client_args (Optional[dict], optional): Additional arguments to pass to the OpenAI client.
    """
-
-    openai_api_key: Optional[str] = Field(default_factory=lambda: get_from_env("OPENAI_API_KEY"))
+    openai_api_key: Optional[str] = Field(default_factory=lambda: get_from_env("QWEN_OPENAI_API_KEY"))
     openai_organization: Optional[str] = Field(default_factory=lambda: get_from_env("OPENAI_ORGANIZATION"))
-    openai_api_base: Optional[str] = Field(default_factory=lambda: get_from_env("OPENAI_API_BASE"))
+    openai_api_base: Optional[str] = Field(default_factory=lambda: get_from_env("QWEN_OPENAI_API_BASE"))
     openai_proxy: Optional[str] = Field(default_factory=lambda: get_from_env("OPENAI_PROXY"))
     openai_client_args: Optional[dict] = None
 
