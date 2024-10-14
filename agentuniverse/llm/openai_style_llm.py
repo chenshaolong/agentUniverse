@@ -18,6 +18,25 @@ from agentuniverse.base.config.component_configer.configers.llm_configer import 
 from agentuniverse.base.util.env_util import get_from_env
 from agentuniverse.llm.llm import LLM, LLMOutput
 from agentuniverse.llm.openai_style_langchain_instance import LangchainOpenAIStyleInstance
+from openai.lib.azure import AzureOpenAI, AsyncAzureOpenAI
+
+api_key=get_from_env('OPENAI_API_KEY')
+azure_endpoint=get_from_env('OPENAI_API_BASE')
+
+def get_openai_client():
+    return AzureOpenAI(
+        api_key=api_key,
+        api_version="2024-02-15-preview",
+        azure_endpoint=azure_endpoint
+    )
+
+
+def get_openai_async_client():
+    return AsyncAzureOpenAI(
+        api_key=api_key,
+        api_version="2024-02-15-preview",
+        azure_endpoint=azure_endpoint
+    )
 
 
 class OpenAIStyleLLM(LLM):
@@ -43,6 +62,7 @@ class OpenAIStyleLLM(LLM):
 
     def _new_client(self):
         """Initialize the openai client."""
+        self.client = get_openai_client()
         if self.client is not None:
             return self.client
         return OpenAI(
@@ -57,6 +77,7 @@ class OpenAIStyleLLM(LLM):
 
     def _new_async_client(self):
         """Initialize the openai async client."""
+        self.async_client = get_openai_async_client()
         if self.async_client is not None:
             return self.async_client
         return AsyncOpenAI(
